@@ -1405,14 +1405,15 @@
         heroPlayBtn.click();
       });
 
-      // ── When video ends: show arrow, unlock scroll ──
+      // ── When video ends: show arrow, keep scroll locked ──
       heroVideo.addEventListener('ended', function () {
         scrollHint.classList.add('visible');
-        unlockScroll();
+        // 不解锁，等用户点击箭头
       });
 
-      // ── Click arrow: start music + scroll down ──
+      // ── Click arrow: unlock + start music + scroll down ──
       scrollHint.addEventListener('click', function () {
+        unlockScroll();
         autoPlayMusic();
         var target = document.getElementById('philosophy');
         if (target) {
