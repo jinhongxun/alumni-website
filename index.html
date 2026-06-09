@@ -264,6 +264,13 @@
       object-position: center;
     }
 
+    /* 手机竖屏：视频 contain 显示完整画面，避免裁切 */
+    @media (max-width: 767px) and (orientation: portrait) {
+      .hero-video {
+        object-fit: contain;
+      }
+    }
+
     /* Hide native controls on WebKit (WeChat x5) */
     video::-webkit-media-controls        { display: none !important; }
     video::-webkit-media-controls-enclosure { display: none !important; }
@@ -938,6 +945,43 @@
         linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%);
       pointer-events: none;
     }
+
+    /* 校友视频点击播放提示 */
+    .reunion-play-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: opacity 0.6s var(--ease-out);
+    }
+    .reunion-play-hint.hidden { opacity: 0; pointer-events: none; }
+    .reunion-play-hint-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    .reunion-play-hint-btn svg { width: 24px; height: 24px; margin-left: 2px; }
+    .reunion-play-hint span {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.5);
+    }
     .reunion-video-text {
       position: absolute;
       bottom: 3rem;
@@ -1207,6 +1251,12 @@
       <source src="校友聚会视频.mp4" type="video/mp4">
     </video>
     <div class="reunion-video-overlay"></div>
+    <div class="reunion-play-hint" id="reunionPlayHint">
+      <button class="reunion-play-hint-btn" aria-label="Play video">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span>Tap to Play</span>
+    </div>
     <div class="reunion-video-text reveal">
       <p>Years later, we sat together again.<br>Hair turned gray, but the smiles never changed.</p>
     </div>
@@ -1440,18 +1490,46 @@
         });
       });
 
-      // ── Reunion video: auto-play when in viewport ──
+      // ── Reunion video: auto-play when in viewport + click fallback ──
       var reunionVideo = document.getElementById('reunionVideo');
+      var reunionPlayHint = document.getElementById('reunionPlayHint');
+
+      function playReunionVideo() {
+        reunionVideo.play().then(function () {
+          if (reunionPlayHint) reunionPlayHint.classList.add('hidden');
+        }).catch(function () {
+          // 自动播放被拒，显示点击提示
+          if (reunionPlayHint) reunionPlayHint.classList.remove('hidden');
+        });
+      }
+
+      // 点击播放
+      if (reunionPlayHint) {
+        reunionPlayHint.addEventListener('click', function () {
+          reunionVideo.play().then(function () {
+            reunionPlayHint.classList.add('hidden');
+          }).catch(function () {});
+        });
+      }
+
+      // 视频播放中隐藏提示
+      if (reunionVideo) {
+        reunionVideo.addEventListener('play', function () {
+          if (reunionPlayHint) reunionPlayHint.classList.add('hidden');
+        });
+      }
+
+      // IntersectionObserver 触发自动播放
       if (reunionVideo && 'IntersectionObserver' in window) {
         var videoObserver = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-              reunionVideo.play().catch(function () {});
+              playReunionVideo();
             } else {
               reunionVideo.pause();
             }
           });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.15 });
         videoObserver.observe(reunionVideo);
       }
 
