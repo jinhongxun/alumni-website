@@ -1405,16 +1405,19 @@
         heroPlayBtn.click();
       });
 
-      // ── When video ends: show arrow, unlock scroll, start music ──
+      // ── When video ends: show arrow, unlock scroll ──
       heroVideo.addEventListener('ended', function () {
-        // Show down arrow
         scrollHint.classList.add('visible');
-
-        // Unlock scroll
         unlockScroll();
+      });
 
-        // Start music
+      // ── Click arrow: start music + scroll down ──
+      scrollHint.addEventListener('click', function () {
         autoPlayMusic();
+        var target = document.getElementById('philosophy');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
       });
 
       // ── Video load error: unlock scroll so page isn't stuck ──
@@ -1422,14 +1425,6 @@
         unlockScroll();
         heroPlayOverlay.classList.add('hidden');
         scrollHint.classList.add('visible');
-      });
-
-      // ── Click arrow to scroll down ──
-      scrollHint.addEventListener('click', function () {
-        var target = document.getElementById('philosophy');
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
       });
 
       // ── Auto-play music after scroll ──
