@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Beijing No.8 Middle School — Alumni Memories</title>
+  <meta name="description" content="A cinematic tribute to the alumni of Beijing No.8 Middle School. Stories, memories, and the bonds that time cannot erase.">
+  <meta name="theme-color" content="#FDFCFA">
+  <!-- Fonts: Cormorant Garamond (serif) + DM Sans (sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================================
+       RESET & TOKENS
+       ================================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:          #FDFCFA;
+      --surface:     #F5F3F0;
+      --bone:        #EAE7E3;
+      --stone:       #C8C3BD;
+      --warm-gray:   #A8A29E;
+      --graphite:    #4A4643;
+      --charcoal:    #2C2926;
+      --ink:         #1A1816;
+      --accent:      #7B8C8E;
+      --warm-gold:   #C4A87C;
+
+      --font-serif:  'Cormorant Garamond', 'Noto Serif SC', 'Georgia', serif;
+      --font-sans:   'DM Sans', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      background: var(--bg);
+      color: var(--graphite);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    body.scroll-locked {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+    ::selection {
+      background: var(--warm-gold);
+      color: #fff;
+    }
+
+    /* Subtle grain texture for nostalgic warmth */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    img, video { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* ================================================================
+       ANIMATIONS
+       ================================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollHint {
+      0%, 100% { opacity: 0.4; transform: translateY(0); }
+      50%      { opacity: 0.8; transform: translateY(6px); }
+    }
+    @keyframes musicBar {
+      from { height: 3px; }
+      to   { height: 12px; }
+    }
+    @keyframes playPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.3); }
+      50%      { box-shadow: 0 0 0 14px rgba(255,255,255,0); }
+    }
+    @keyframes playFadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* Safe fallback: everything visible */
+    .hero-eyebrow, .hero-title-line, .hero-sub,
+    .scroll-hint, .reveal, .reveal-img { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-eyebrow, .hero-title-line, .hero-sub {
+        opacity: 0;
+        animation: fadeUp 1s var(--ease-out) forwards;
+      }
+      .hero-eyebrow     { animation-delay: 0.3s; }
+      .hero-title-line   { animation-delay: 0.5s; }
+      .hero-title-line:nth-child(2) { animation-delay: 0.65s; }
+      .hero-sub          { animation-delay: 0.85s; }
+      .scroll-hint {
+        opacity: 0;
+        animation: fadeIn 1s var(--ease-out) 1.2s forwards;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-d1 { transition-delay: 0.12s; }
+      .reveal-d2 { transition-delay: 0.24s; }
+      .reveal-d3 { transition-delay: 0.36s; }
+      /* Image reveal: scale-up instead of translateY */
+      .reveal-img {
+        opacity: 0;
+        transform: scale(0.97);
+        transition: opacity 0.9s var(--ease-out), transform 1.2s var(--ease-out);
+      }
+      .reveal-img.visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* ================================================================
+       HEADER — minimal, transparent over video
+       ================================================================ */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(1.25rem + env(safe-area-inset-top, 0px)) 1.5rem 1.25rem;
+      height: calc(4rem + env(safe-area-inset-top, 0px));
+      transition: background 0.5s, backdrop-filter 0.5s, box-shadow 0.5s;
+    }
+    .header.scrolled {
+      background: rgba(253, 252, 250, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+    }
+
+    .header-logo {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0.04em;
+      transition: color 0.5s;
+    }
+    .header.scrolled .header-logo { color: var(--ink); }
+
+    .header-nav {
+      display: none;
+      gap: 2.5rem;
+    }
+    .header-nav a {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.7);
+      transition: color 0.3s;
+    }
+    .header-nav a:hover { color: #fff; }
+    .header.scrolled .header-nav a { color: var(--graphite); }
+    .header.scrolled .header-nav a:hover { color: var(--ink); }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 110;
+    }
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: #fff;
+      transition: transform 0.3s, opacity 0.3s, background 0.3s;
+    }
+    .header.scrolled .hamburger span { background: var(--ink); }
+    .hamburger.open span:first-child { transform: rotate(45deg) translate(4.5px, 4.5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:last-child  { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(26, 24, 22, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu a {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.02em;
+      transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: #fff; }
+
+    @media (min-width: 768px) {
+      .header { padding: calc(1.5rem + env(safe-area-inset-top, 0px)) 3rem 1.5rem; height: calc(5rem + env(safe-area-inset-top, 0px)); }
+      .header-nav { display: flex; }
+      .hamburger  { display: none !important; }
+    }
+
+    /* ================================================================
+       HERO — full-bleed video, cinematic mask
+       ================================================================ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Hide native controls on WebKit (WeChat x5) */
+    video::-webkit-media-controls        { display: none !important; }
+    video::-webkit-media-controls-enclosure { display: none !important; }
+
+    /* Inward-fading gradient mask — softens video edges into page bg */
+    .hero-mask {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, var(--bg) 0%, transparent 20%),
+        linear-gradient(to top,    var(--bg) 0%, transparent 25%),
+        linear-gradient(to right,  var(--bg) 0%, transparent 12%),
+        linear-gradient(to left,   var(--bg) 0%, transparent 12%),
+        radial-gradient(ellipse at center, transparent 35%, var(--bg) 100%);
+    }
+
+    /* Dark overlay for text contrast */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.22);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(2.8rem, 10vw, 10rem);
+      line-height: 0.9;
+      color: #fff;
+      letter-spacing: -0.025em;
+    }
+    .hero-title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      max-width: 26rem;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.02em;
+    }
+    @media (min-width: 640px) {
+      .hero-sub { max-width: 30rem; font-size: 0.9rem; }
+    }
+
+    /* iPhone landscape: give title breathing room */
+    @media (orientation: landscape) and (max-height: 500px) {
+      .hero-sub { display: none; }
+      .hero-play-overlay { gap: 0.75rem; }
+      .hero-play-btn { width: 60px; height: 60px; }
+    }
+
+    /* Play button overlay */
+    .hero-play-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background: rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: opacity 0.8s var(--ease-out);
+    }
+    .hero-play-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .hero-play-btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s var(--ease-out);
+      animation: playPulse 2.5s ease-in-out infinite, playFadeIn 1s var(--ease-out) 0.2s both;
+    }
+    .hero-play-btn:hover {
+      background: rgba(255,255,255,0.22);
+      transform: scale(1.08);
+    }
+    .hero-play-btn svg {
+      width: 28px;
+      height: 28px;
+      margin-left: 3px;
+    }
+    .hero-play-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+      animation: playFadeIn 1s var(--ease-out) 0.6s both;
+    }
+
+    /* Scroll hint — down arrow */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.8s var(--ease-out);
+      cursor: pointer;
+    }
+    .scroll-hint.visible {
+      opacity: 1;
+    }
+    .scroll-hint-arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid rgba(255,255,255,0.6);
+      border-bottom: 2px solid rgba(255,255,255,0.6);
+      transform: rotate(45deg);
+      animation: scrollHint 2.2s ease-in-out infinite;
+    }
+    .scroll-hint-text {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ================================================================
+       MUSIC PLAYER — appears after video ends
+       ================================================================ */
+    .music-player {
+      position: fixed;
+      bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+      right: 1.5rem;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      background: rgba(26, 24, 22, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+      pointer-events: none;
+    }
+    .music-player.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    .music-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+    .music-btn:hover { background: rgba(255,255,255,0.2); }
+    .music-btn svg { width: 14px; height: 14px; }
+    .music-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+    .music-title {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .music-visual {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+    .music-bar {
+      width: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      height: 3px;
+    }
+    .music-player.playing .music-bar {
+      animation: musicBar 0.8s ease-in-out infinite alternate;
+    }
+    .music-bar:nth-child(1) { animation-delay: 0s; }
+    .music-bar:nth-child(2) { animation-delay: 0.15s; }
+    .music-bar:nth-child(3) { animation-delay: 0.3s; }
+    .music-bar:nth-child(4) { animation-delay: 0.1s; }
+    .music-bar:nth-child(5) { animation-delay: 0.25s; }
+
+    @media (min-width: 768px) {
+      .music-player { bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); right: 2rem; }
+    }
+
+    /* ================================================================
+       SECTION SPACING
+       ================================================================ */
+    .section {
+      padding: 5rem 1.5rem;
+    }
+    @media (min-width: 640px)  { .section { padding: 7rem 2rem; } }
+    @media (min-width: 1024px) { .section { padding: 10rem 4rem; } }
+
+    .container {
+      max-width: 72rem;
+      margin: 0 auto;
+    }
+
+    /* Eyebrow label */
+    .eyebrow {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--warm-gray);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Section heading */
+    .heading {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+    }
+
+    /* Body text */
+    .body-text {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: var(--graphite);
+      max-width: 55ch;
+    }
+    @media (min-width: 768px) {
+      .body-text { font-size: 1rem; }
+    }
+
+    /* Divider */
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--stone);
+    }
+
+    /* ================================================================
+       PHILOSOPHY — editorial two-column
+       ================================================================ */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (min-width: 768px) {
+      .philosophy-grid {
+        grid-template-columns: 5fr 7fr;
+        gap: 5rem;
+      }
+    }
+
+    .philosophy-quote {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      line-height: 1.4;
+      color: var(--charcoal);
+      letter-spacing: -0.01em;
+    }
+    .philosophy-quote-author {
+      display: block;
+      margin-top: 1.5rem;
+      font-family: var(--font-sans);
+      font-style: normal;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--warm-gray);
+    }
+
+    .philosophy-body p {
+      margin-bottom: 1.5rem;
+    }
+    .philosophy-body p:last-child { margin-bottom: 0; }
+
+    /* Blockquote editorial accent */
+    blockquote.philosophy-quote {
+      border-left: 2px solid var(--warm-gold);
+      padding-left: 1.5rem;
+      background: linear-gradient(135deg, rgba(196,168,124,0.04) 0%, transparent 60%);
+      padding: 0.5rem 0 0.5rem 1.5rem;
+    }
+
+    /* ================================================================
+       TIMELINE — horizontal line with markers
+       ================================================================ */
+    .timeline {
+      position: relative;
+      padding-top: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--bone);
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 640px) {
+      .timeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 4rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .timeline-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+      }
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-top: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--stone);
+    }
+
+    .timeline-year {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-desc {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--warm-gray);
+    }
+
+    /* ================================================================
+       GALLERY — asymmetric grid
+       ================================================================ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.25rem;
+        row-gap: 2rem;
+      }
+    }
+
+    .gallery-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .gallery-card-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .gallery-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out);
+    }
+    .gallery-card:hover .gallery-card-img img {
+      transform: scale(1.05);
+    }
+    .gallery-card-caption {
+      padding: 1.25rem 1rem;
+    }
+    .gallery-card-caption h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 0.25rem;
+    }
+    .gallery-card-caption p {
+      font-size: 0.7rem;
+      color: var(--warm-gray);
+      letter-spacing: 0.03em;
+    }
+
+    /* Grid spans (tablet+) */
+    @media (min-width: 640px) {
+      .span-7  { grid-column: span 7; }
+      .span-5  { grid-column: span 5; }
+      .span-8  { grid-column: span 8; }
+      .span-4  { grid-column: span 4; }
+      .span-5-s8 { grid-column: 8 / span 5; }
+      .span-4-s1 { grid-column: 1 / span 4; }
+      .span-7-s5 { grid-column: 5 / span 7; }
+    }
+
+    /* ================================================================
+       CLOSING — centered, cinematic
+       ================================================================ */
+    .closing {
+      text-align: center;
+      padding: 6rem 1.5rem;
+    }
+    @media (min-width: 640px)  { .closing { padding: 9rem 2rem; } }
+    @media (min-width: 1024px) { .closing { padding: 12rem 4rem; } }
+
+    .closing-heading {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(2.2rem, 7vw, 6rem);
+      line-height: 1.05;
+      color: var(--ink);
+      letter-spacing: 0.12em;
+    }
+    .closing-sub {
+      margin-top: 2rem;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+      text-transform: none;
+      letter-spacing: 0.04em;
+      color: var(--warm-gray);
+    }
+    .closing-divider {
+      width: 1px;
+      height: 96px;
+      background: linear-gradient(to bottom, var(--warm-gold), transparent);
+      margin: 2.5rem auto 0;
+    }
+
+    /* ================================================================
+       FOOTER
+       ================================================================ */
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem 1.5rem calc(2rem + env(safe-area-inset-bottom, 0px));
+      border-top: 1px solid var(--bone);
+    }
+    @media (min-width: 768px) {
+      .footer {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 2.5rem 4rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
+      }
+    }
+    .footer span, .footer a {
+      font-size: 0.65rem;
+      color: var(--warm-gray);
+      letter-spacing: 0.06em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .footer a {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      transition: color 0.3s;
+    }
+    .footer a:hover { color: var(--charcoal); }
+
+    /* ================================================================
+       CHAPTERS — narrative timeline sections
+       ================================================================ */
+    .chapter {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Split layout: image + text */
+    .chapter-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .chapter-split {
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+      .chapter-split.reverse { direction: rtl; }
+      .chapter-split.reverse > * { direction: ltr; }
+    }
+
+    .chapter-img {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .chapter-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      transition: transform 1.2s var(--ease-out);
+    }
+    .chapter-img:hover img {
+      transform: scale(1.04);
+    }
+
+    .chapter-number {
+      font-family: var(--font-serif);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 1rem;
+    }
+
+    .chapter-title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      line-height: 1.15;
+      color: var(--charcoal);
+      letter-spacing: -0.015em;
+      margin-bottom: 1.5rem;
+    }
+
+    .chapter-body {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--graphite);
+      max-width: 42rem;
+    }
+    .chapter-body p { margin-bottom: 1.2rem; }
+    .chapter-body p:last-child { margin-bottom: 0; }
+
+    /* Full-width cinematic with overlay text */
+    .chapter-cinematic {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      background: var(--ink);
+    }
+    @media (min-width: 768px) {
+      .chapter-cinematic { min-height: 80vh; padding: 6rem 3rem; }
+    }
+    .chapter-cinematic-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+    .chapter-cinematic-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    }
+    .chapter-cinematic-content {
+      position: relative;
+      z-index: 2;
+      max-width: 42rem;
+    }
+    .chapter-cinematic-content .chapter-number {
+      color: rgba(255,255,255,0.5);
+    }
+    .chapter-cinematic-content .chapter-title {
+      color: #fff;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+    }
+    .chapter-cinematic-content .chapter-body {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      max-width: 36rem;
+      margin: 0 auto;
+    }
+
+    /* ================================================================
+       REUNION VIDEO — full-screen reunion video
+       ================================================================ */
+    .reunion-video {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    @media (min-width: 768px) {
+      .reunion-video { height: 80vh; }
+    }
+    .reunion-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .reunion-video-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%),
+        linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%);
+      pointer-events: none;
+    }
+    .reunion-video-text {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      text-align: center;
+      width: 90%;
+    }
+    .reunion-video-text p {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: rgba(255,255,255,0.85);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    /* ================================================================
+       THANKS — special thanks
+       ================================================================ */
+    .thanks {
+      text-align: center;
+      padding: 4rem 1.5rem 5rem;
+      background: var(--surface);
+    }
+    @media (min-width: 768px) {
+      .thanks { padding: 5rem 3rem 6rem; }
+    }
+
+    .thanks-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--warm-gray);
+      margin-bottom: 2rem;
+    }
+
+    .thanks-names {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem 3rem;
+      margin-top: 1.5rem;
+    }
+
+    .thanks-name {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--charcoal);
+      letter-spacing: 0.02em;
+    }
+
+    .thanks-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--stone);
+      margin: 2.5rem auto 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="header" id="header">
+    <a href="#" class="header-logo">BJ No.8</a>
+    <nav class="header-nav">
+      <a href="#philosophy">Story</a>
+      <a href="#chapter-beginning">Chapters</a>
+      <a href="#reunion">Reunion</a>
+      <a href="#closing">Connect</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#philosophy">Story</a>
+    <a href="#chapter-beginning">Chapters</a>
+    <a href="#reunion">Reunion</a>
+    <a href="#closing">Connect</a>
+  </div>
+
+  <!-- ============================================================
+       HERO — full-screen video
+       ============================================================ -->
+  <section class="hero" id="hero">
+    <video
+      class="hero-video"
+      id="heroVideo"
+      playsinline
+      webkit-playsinline
+      x5-video-player-type="h5"
+      x5-video-player-fullscreen="true"
+      x5-video-orientation="portrait"
+      preload="metadata"
+      poster="相片/校园夏天.jpg"
+    >
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-mask"></div>
+    <div class="hero-overlay"></div>
+
+    <!-- Play button overlay — click to start video with sound -->
+    <div class="hero-play-overlay" id="heroPlayOverlay">
+      <button class="hero-play-btn" id="heroPlayBtn" aria-label="Play video">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </button>
+      <span class="hero-play-label">Click to Play</span>
+    </div>
+
+    <div class="hero-content">
+      <span class="hero-eyebrow">Est. 1949 · Beijing No.8 Middle School</span>
+      <h1 class="hero-title">
+        <span class="hero-title-line">Where We</span>
+        <span class="hero-title-line">Once Belonged</span>
+      </h1>
+      <p class="hero-sub">A cinematic tribute to the alumni of Beijing No.8 — the hallways, the laughter, and the bonds that time cannot erase.</p>
+    </div>
+
+    <div class="scroll-hint" id="scrollHint">
+      <div class="scroll-hint-arrow"></div>
+      <span class="scroll-hint-text">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PHILOSOPHY
+       ============================================================ -->
+  <section class="section" id="philosophy">
+    <div class="container">
+      <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
+        <img src="相片/校园夏天.jpg" alt="School campus in summer" loading="lazy" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 2px;">
+      </div>
+      <div class="philosophy-grid">
+        <div class="reveal">
+          <blockquote class="philosophy-quote">
+            "We did not know we were making memories. We just knew we were having fun."
+            <cite class="philosophy-quote-author">— Winnie the Pooh</cite>
+          </blockquote>
+        </div>
+        <div class="philosophy-body reveal reveal-d1">
+          <span class="eyebrow">The Story</span>
+          <h2 class="heading" style="margin-bottom: 2rem;">Not Just a School</h2>
+          <p class="body-text">Beijing No.8 Middle School is not merely a place where lessons were learned and exams were taken. It is a crucible of youth — a space where identities were forged in the fire of adolescent uncertainty, where friendships were sealed with a handshake or a shared secret after lights-out.</p>
+          <p class="body-text">For generations of alumni, the school represents something larger than education: it is a shared origin story. The same corridors walked by different classes, the same trees that watched us grow, the same bell that marked the end of one chapter and the beginning of another.</p>
+          <p class="body-text">This website is a living archive — a place where memories are not preserved in amber but kept alive through the voices of those who lived them. Every photograph, every story, every fragment of recollection adds another thread to the tapestry of our collective past.</p>
+          <div class="divider" style="margin-top: 2.5rem;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 1 — The Beginning
+       ============================================================ -->
+  <section class="section chapter" id="chapter-beginning">
+    <div class="container">
+      <div class="chapter-split reveal">
+        <div class="chapter-img reveal-img">
+          <img src="相片/校园樱桃树.jpg" alt="Cherry blossoms on campus" loading="lazy">
+        </div>
+        <div class="chapter-text">
+          <span class="chapter-number">Chapter One</span>
+          <h2 class="chapter-title">That Autumn, We Walked<br>Through the Same Door</h2>
+          <div class="chapter-body">
+            <p>Beijing, 1949. Plane tree leaves carpeted Chang'an Avenue. A group of teenagers, bags slung over their shoulders, wandered through the hutongs and stepped through the gates of No. 8 Middle School. They didn't know that this single step would bind their names into the same story.</p>
+            <p>The desks still smelled of fresh-cut wood. The first word written on the blackboard was the teacher's name. No one could have guessed that decades later, what we'd miss most were the most ordinary afternoons — sunlight spilling through the window onto open textbooks, someone dozing off, someone passing notes.</p>
+            <p>That was the first page of our story. And even now, when I turn back to it, the air still tastes sweet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 2 — The Golden Days (cinematic)
+       ============================================================ -->
+  <section class="chapter">
+    <div class="chapter-cinematic reveal">
+      <img class="chapter-cinematic-bg" src="相片/校园老操场.png" alt="Old running track" loading="lazy">
+      <div class="chapter-cinematic-overlay"></div>
+      <div class="chapter-cinematic-content">
+        <span class="chapter-number">Chapter Two</span>
+        <h2 class="chapter-title">The Playground Where<br>We Ran Out of Time</h2>
+        <div class="chapter-body">
+          <p>The moment the bell rang, the whole building shook. Footfalls poured through the hallways like a tide, surging toward the field. Some chased basketballs, some jumped rope, some leaned against the wall in the sun — pretending to read, really watching the world go by.</p>
+          <p>We chased the wind on the track, stifled laughter in class, drew caricatures of teachers on the blackboard, and carved names on desks that we'd never dare say out loud. We had nothing back then, and yet we felt we owned the entire world.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 2 continued — Classroom memories
+       ============================================================ -->
+  <section class="section chapter">
+    <div class="container">
+      <div class="chapter-split reverse reveal">
+        <div class="chapter-img reveal-img">
+          <img src="相片/校园雪景.jpg" alt="Campus in snow" loading="lazy">
+        </div>
+        <div class="chapter-text">
+          <span class="chapter-number">The Golden Days</span>
+          <h2 class="chapter-title">The Blackboard Was Erased,<br>But Some Words Remain</h2>
+          <div class="chapter-body">
+            <p>Chalk dust settled on the teacher's shoulders while cicadas screamed outside. In math class, a note slid across the aisle: "Corner store after school?" It was the most urgent matter in the world.</p>
+            <p>We memorized ancient poetry, solved countless equations, but never learned how to say goodbye. Graduation day taught us that the hardest question was never on the exam paper.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 3 — The Last Day
+       ============================================================ -->
+  <section class="section chapter" style="background: var(--surface);">
+    <div class="container">
+      <div class="chapter-split reveal">
+        <div class="chapter-img reveal-img">
+          <img src="相片/毕业季.jpg" alt="Graduation season" loading="lazy">
+        </div>
+        <div class="chapter-text">
+          <span class="chapter-number">Chapter Three</span>
+          <h2 class="chapter-title">The Last Roll Call —<br>Everyone Was Here</h2>
+          <div class="chapter-body">
+            <p>In the graduation photo, everyone smiled so hard it hurt — as if smiling loud enough could keep goodbye from coming. The teacher said, "Come back and visit sometime," voice cracking. A girl in the front row lowered her head. Someone started clapping, and inside the applause, there were tears.</p>
+            <p>We hurled our caps into the sky and thought that was the end. It took years to understand: it was actually the beginning of another story — a story about missing, one we'd tell for the rest of our lives.</p>
+            <p>Some people we never saw again after graduation. But every time we hear that song, smell chalk dust, or pass by a school, our hearts are yanked back to that summer in an instant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       REUNION TRANSITION
+       ============================================================ -->
+  <section class="section" style="text-align: center; padding: 4rem 1.5rem;">
+    <p class="reveal" style="font-family: var(--font-serif); font-weight: 300; font-style: italic; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--warm-gray); letter-spacing: 0.02em;">Years passed. Life carried us far apart. But some bonds don't break — they just wait.</p>
+  </section>
+
+  <!-- ============================================================
+       REUNION VIDEO — full-screen
+       ============================================================ -->
+  <section class="reunion-video" id="reunion">
+    <video
+      id="reunionVideo"
+      playsinline
+      webkit-playsinline
+      x5-video-player-type="h5"
+      x5-video-player-fullscreen="true"
+      x5-video-orientation="portrait"
+      preload="metadata"
+      muted
+      loop
+    >
+      <source src="校友聚会视频.mp4" type="video/mp4">
+    </video>
+    <div class="reunion-video-overlay"></div>
+    <div class="reunion-video-text reveal">
+      <p>Years later, we sat together again.<br>Hair turned gray, but the smiles never changed.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CLOSING
+       ============================================================ -->
+  <section class="closing" id="closing">
+    <div class="reveal">
+      <span class="eyebrow">Reconnect</span>
+    </div>
+    <h2 class="closing-heading reveal">别来无恙</h2>
+    <p class="closing-sub reveal reveal-d1">We hope you've been well</p>
+    <div class="closing-divider reveal reveal-d2"></div>
+  </section>
+
+  <!-- ============================================================
+       SPECIAL THANKS
+       ============================================================ -->
+  <section class="thanks">
+    <div class="reveal">
+      <span class="thanks-label">Special Thanks</span>
+      <h2 class="heading" style="font-size: clamp(1.4rem, 3vw, 2rem);">With Gratitude</h2>
+      <div class="thanks-names">
+        <span class="thanks-name reveal">Mr. Li Pingshan</span>
+        <span class="thanks-name reveal reveal-d1">Ms. Li Chan</span>
+        <span class="thanks-name reveal reveal-d2">Mr. Jin Jing</span>
+      </div>
+      <p class="body-text reveal reveal-d3" style="max-width: 32rem; margin: 2rem auto 0; text-align: center; font-size: 0.85rem; color: var(--warm-gray);">
+        For everything you've done for the alumni of No. 8.<br>
+        Because of you, these memories were not taken by time.
+      </p>
+      <div class="thanks-divider reveal"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <span>&copy; 2026 Beijing No.8 Middle School Alumni</span>
+    <div class="footer-links">
+      <a href="#">WeChat</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       MUSIC PLAYER
+       ============================================================ -->
+  <div class="music-player" id="musicPlayer">
+    <button class="music-btn" id="musicBtn" aria-label="Toggle music">
+      <svg id="iconPlay" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <svg id="iconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+      </svg>
+    </button>
+    <div class="music-info">
+      <span class="music-title">Long Time No See — Roy & Huo Siyu</span>
+      <div class="music-visual">
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background audio (MP3 for iOS, OGG for Android) -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="Roy&霍思羽 - 别来无恙.mp3" type="audio/mpeg">
+    <source src="Roy&霍思羽 - 别来无恙 [mqms2].ogg" type="audio/ogg">
+  </audio>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      var header        = document.getElementById('header');
+      var hamburger     = document.getElementById('hamburger');
+      var mobileMenu    = document.getElementById('mobileMenu');
+      var heroVideo     = document.getElementById('heroVideo');
+      var heroPlayOverlay = document.getElementById('heroPlayOverlay');
+      var heroPlayBtn   = document.getElementById('heroPlayBtn');
+      var scrollHint    = document.getElementById('scrollHint');
+      var musicPlayer   = document.getElementById('musicPlayer');
+      var musicBtn      = document.getElementById('musicBtn');
+      var bgMusic       = document.getElementById('bgMusic');
+      var iconPlay      = document.getElementById('iconPlay');
+      var iconPause     = document.getElementById('iconPause');
+
+      var musicStarted = false;
+      var musicPlaying = false;
+      var videoStarted = false;
+      var scrollLocked = true; // Lock scroll initially
+      var savedScrollY = 0;
+
+      // ── Lock / unlock scroll (iOS-safe with position restore) ──
+      function lockScroll() {
+        savedScrollY = window.scrollY || window.pageYOffset;
+        document.body.style.top = -savedScrollY + 'px';
+        scrollLocked = true;
+        document.body.classList.add('scroll-locked');
+      }
+      function unlockScroll() {
+        scrollLocked = false;
+        document.body.classList.remove('scroll-locked');
+        document.body.style.top = '';
+        window.scrollTo(0, savedScrollY || 0);
+      }
+
+      // Lock on load
+      lockScroll();
+
+      // ── Play button → start video with sound ──
+      heroPlayBtn.addEventListener('click', function () {
+        if (videoStarted) return;
+        videoStarted = true;
+        heroVideo.play().then(function () {
+          heroPlayOverlay.classList.add('hidden');
+          lockScroll(); // Keep locked during playback
+        }).catch(function () {
+          // Fallback: try muted playback (iOS Safari may block audio)
+          heroVideo.muted = true;
+          heroVideo.play().then(function () {
+            heroPlayOverlay.classList.add('hidden');
+            lockScroll();
+          }).catch(function () {
+            // Even muted failed — show error, unlock scroll
+            heroPlayOverlay.classList.add('hidden');
+            unlockScroll();
+            scrollHint.classList.add('visible');
+          });
+        });
+      });
+      // Also allow clicking anywhere on the overlay
+      heroPlayOverlay.addEventListener('click', function (e) {
+        if (e.target === heroPlayBtn || heroPlayBtn.contains(e.target)) return;
+        heroPlayBtn.click();
+      });
+
+      // ── When video ends: show arrow, unlock scroll, start music ──
+      heroVideo.addEventListener('ended', function () {
+        // Show down arrow
+        scrollHint.classList.add('visible');
+
+        // Unlock scroll
+        unlockScroll();
+
+        // Start music
+        autoPlayMusic();
+      });
+
+      // ── Video load error: unlock scroll so page isn't stuck ──
+      heroVideo.addEventListener('error', function () {
+        unlockScroll();
+        heroPlayOverlay.classList.add('hidden');
+        scrollHint.classList.add('visible');
+      });
+
+      // ── Click arrow to scroll down ──
+      scrollHint.addEventListener('click', function () {
+        var target = document.getElementById('philosophy');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+
+      // ── Auto-play music after scroll ──
+      function autoPlayMusic() {
+        if (musicStarted) return;
+        musicStarted = true;
+        musicPlayer.classList.add('visible');
+        bgMusic.play().then(function () {
+          musicPlaying = true;
+          musicPlayer.classList.add('playing');
+          iconPlay.style.display = 'none';
+          iconPause.style.display = '';
+        }).catch(function () {
+          // Autoplay blocked — show player, user can tap play
+        });
+      }
+
+      // ── Music toggle ──
+      musicBtn.addEventListener('click', function () {
+        if (musicPlaying) {
+          bgMusic.pause();
+          musicPlaying = false;
+          musicPlayer.classList.remove('playing');
+          iconPlay.style.display = '';
+          iconPause.style.display = 'none';
+        } else {
+          bgMusic.play().then(function () {
+            musicPlaying = true;
+            musicPlayer.classList.add('playing');
+            iconPlay.style.display = 'none';
+            iconPause.style.display = '';
+          }).catch(function () {});
+        }
+      });
+
+      // ── Block scroll when locked ──
+      window.addEventListener('wheel', function (e) {
+        if (scrollLocked) e.preventDefault();
+      }, { passive: false });
+      window.addEventListener('touchmove', function (e) {
+        if (scrollLocked) e.preventDefault();
+      }, { passive: false });
+
+      // ── Header scroll effect ──
+      window.addEventListener('scroll', function () {
+        header.classList.toggle('scrolled', (window.scrollY || window.pageYOffset) > 60);
+      }, { passive: true });
+
+      // ── Hamburger menu ──
+      hamburger.addEventListener('click', function () {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+        });
+      });
+
+      // ── Reunion video: auto-play when in viewport ──
+      var reunionVideo = document.getElementById('reunionVideo');
+      if (reunionVideo && 'IntersectionObserver' in window) {
+        var videoObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              reunionVideo.play().catch(function () {});
+            } else {
+              reunionVideo.pause();
+            }
+          });
+        }, { threshold: 0.3 });
+        videoObserver.observe(reunionVideo);
+      }
+
+      // ── Scroll reveal ──
+      var revealEls = document.querySelectorAll('.reveal, .reveal-img');
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(function (el) { observer.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('visible'); });
+      }
+    })();
+  </script>
+</body>
+</html>
