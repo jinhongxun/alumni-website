@@ -1358,6 +1358,7 @@
       var musicStarted = false;
       var musicPlaying = false;
       var videoStarted = false;
+      var videoEnded = false;   // 视频是否已播放完毕
       var scrollLocked = true; // Lock scroll initially
       var savedScrollY = 0;
 
@@ -1407,12 +1408,15 @@
 
       // ── When video ends: show arrow, keep scroll locked ──
       heroVideo.addEventListener('ended', function () {
+        videoEnded = true;
         scrollHint.classList.add('visible');
         // 不解锁，等用户点击箭头
       });
 
       // ── Click arrow: unlock + start music + scroll down ──
       scrollHint.addEventListener('click', function () {
+        // 视频未播完时禁止点击箭头
+        if (!videoEnded) return;
         unlockScroll();
         autoPlayMusic();
         var target = document.getElementById('philosophy');
@@ -1422,7 +1426,20 @@
       });
 
       // ── Video load error: unlock scroll so page isn't stuck ──
+      // 视频播放中禁止点击暂停（点击事件直接穿透到下层）
+      heroVideo.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      // 防止视频被暂停（播放中用户误触）
+      heroVideo.addEventListener('pause', function () {
+        if (videoStarted && !videoEnded && !heroVideo.ended) {
+          heroVideo.play().catch(function () {});
+        }
+      });
+
       heroVideo.addEventListener('error', function () {
+        videoEnded = true; // 视频加载失败也允许继续浏览
         unlockScroll();
         heroPlayOverlay.classList.add('hidden');
         scrollHint.classList.add('visible');
