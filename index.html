@@ -115,10 +115,6 @@
       .hero-title-line   { animation-delay: 0.5s; }
       .hero-title-line:nth-child(2) { animation-delay: 0.65s; }
       .hero-sub          { animation-delay: 0.85s; }
-      .scroll-hint {
-        opacity: 0;
-        animation: fadeIn 1s var(--ease-out) 1.2s forwards;
-      }
       .reveal {
         opacity: 0;
         transform: translateY(40px);
@@ -410,11 +406,13 @@
       align-items: center;
       gap: 0.75rem;
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.8s var(--ease-out);
       cursor: pointer;
     }
     .scroll-hint.visible {
       opacity: 1;
+      pointer-events: auto;
     }
     .scroll-hint-arrow {
       width: 24px;
