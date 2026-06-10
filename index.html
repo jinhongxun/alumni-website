@@ -1078,8 +1078,6 @@
       playsinline
       webkit-playsinline
       x5-video-player-type="h5"
-      x5-video-player-fullscreen="true"
-      x5-video-orientation="portrait"
       preload="metadata"
       poster="相片/校园夏天.jpg"
     >
@@ -1240,9 +1238,7 @@
       playsinline
       webkit-playsinline
       x5-video-player-type="h5"
-      x5-video-player-fullscreen="true"
-      x5-video-orientation="portrait"
-      preload="metadata"
+      preload="auto"
       muted
       loop
     >
@@ -1456,6 +1452,15 @@
         }).catch(function () {
           // Autoplay blocked — show player, user can tap play
         });
+
+        // 音乐响起时同步播放校友视频（muted 允许自动播放）
+        if (reunionVideo) {
+          reunionVideo.play().then(function () {
+            if (reunionPlayHint) reunionPlayHint.classList.add('hidden');
+          }).catch(function () {
+            // 浏览器阻止了自动播放，等用户滚动到视频区域再由 IntersectionObserver 触发
+          });
+        }
       }
 
       // ── Music toggle ──
